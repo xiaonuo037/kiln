@@ -1,6 +1,6 @@
 # 炉火 Kiln
 
-Minecraft Java 版启动器。开源，免费，界面和内核都是自己写的。
+Minecraft Java 版启动器，开源免费。
 
 Kiln 是窑的意思。窑用来烧火，这个启动器用来点火进游戏。
 
