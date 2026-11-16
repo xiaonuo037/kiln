@@ -1,0 +1,125 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Kiln.App.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1040" d:DesignHeight="660"
+        x:Class="Kiln.App.MainWindow"
+        Title="炉火 Kiln"
+        Width="1040" Height="660"
+        MinWidth="860" MinHeight="540"
+        Background="#FBF8F3"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Styles>
+        <Style Selector="TextBlock.label">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="#9A9186" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="TextBlock.value">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="#3A362F" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </Window.Styles>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <Border Grid.Row="0" Padding="22,14" BorderBrush="#E9E0D2" BorderThickness="0,0,0,1">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="9" VerticalAlignment="Center">
+                    <Border Width="9" Height="9" CornerRadius="5" Background="#C4622D" VerticalAlignment="Center" />
+                    <TextBlock Text="炉火" FontSize="17" FontWeight="SemiBold" Foreground="#2C2C2A" VerticalAlignment="Center" />
+                    <TextBlock Text="Kiln" FontSize="12" Foreground="#B4805E" VerticalAlignment="Center" Margin="0,3,0,0" />
+                </StackPanel>
+
+                <TextBlock Grid.Column="1" x:Name="FolderText"
+                           Text="未选择游戏目录"
+                           Margin="18,0" VerticalAlignment="Center"
+                           FontSize="12" Foreground="#9A9186"
+                           TextTrimming="CharacterEllipsis" />
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
+                    <Button x:Name="RefreshButton" Content="刷新" Click="OnRefresh" />
+                    <Button x:Name="PickFolderButton" Content="选择目录" Click="OnPickFolder" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" ColumnDefinitions="300,*">
+            <Border Grid.Column="0" BorderBrush="#E9E0D2" BorderThickness="0,0,1,0">
+                <Grid RowDefinitions="Auto,*">
+                    <TextBlock Grid.Row="0" x:Name="ListHeader" Text="版本"
+                               Margin="22,16,22,6" FontSize="12" Foreground="#9A9186" />
+                    <ListBox Grid.Row="1" x:Name="VersionList"
+                             Background="Transparent" BorderThickness="0"
+                             Margin="6,0,6,8"
+                             SelectionChanged="OnVersionSelected">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="vm:VersionListItem">
+                                <StackPanel Spacing="3" Margin="2,5">
+                                    <TextBlock Text="{Binding Id}" FontSize="14" FontWeight="SemiBold"
+                                               Foreground="#2C2C2A" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Text="{Binding Subtitle}" FontSize="11"
+                                               Foreground="#9A9186" TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+
+            <ScrollViewer Grid.Column="1" Padding="32,26">
+                <StackPanel Spacing="16">
+                    <StackPanel Spacing="4">
+                        <TextBlock x:Name="DetailId" Text="—" FontSize="24" FontWeight="SemiBold"
+                                   Foreground="#2C2C2A" TextWrapping="Wrap" />
+                        <TextBlock x:Name="DetailSubtitle" Text="" FontSize="12" Foreground="#9A9186" TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <Border x:Name="ErrorBox" IsVisible="False"
+                            Background="#FCEBEB" BorderBrush="#F09595" BorderThickness="1"
+                            CornerRadius="8" Padding="14,11">
+                        <TextBlock x:Name="ErrorText" Text="" FontSize="12" Foreground="#791F1F" TextWrapping="Wrap" />
+                    </Border>
+
+                    <Border x:Name="DetailCard" IsVisible="False"
+                            Background="#FFFFFF" BorderBrush="#EDE5D8" BorderThickness="1"
+                            CornerRadius="10" Padding="18,16">
+                        <Grid ColumnDefinitions="104,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10">
+                            <TextBlock Grid.Row="0" Grid.Column="0" Classes="label" Text="类型" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="VType" Classes="value" Text="—" />
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Classes="label" Text="继承链" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="VChain" Classes="value" Text="—" />
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Classes="label" Text="主类" />
+                            <TextBlock Grid.Row="2" Grid.Column="1" x:Name="VMainClass" Classes="value" Text="—" />
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" Classes="label" Text="资源索引" />
+                            <TextBlock Grid.Row="3" Grid.Column="1" x:Name="VAssets" Classes="value" Text="—" />
+
+                            <TextBlock Grid.Row="4" Grid.Column="0" Classes="label" Text="客户端 jar" />
+                            <TextBlock Grid.Row="4" Grid.Column="1" x:Name="VJar" Classes="value" Text="—" />
+
+                            <TextBlock Grid.Row="5" Grid.Column="0" Classes="label" Text="依赖库" />
+                            <TextBlock Grid.Row="5" Grid.Column="1" x:Name="VLibs" Classes="value" Text="—" />
+
+                            <TextBlock Grid.Row="6" Grid.Column="0" Classes="label" Text="启动参数" />
+                            <TextBlock Grid.Row="6" Grid.Column="1" x:Name="VArgs" Classes="value" Text="—" />
+                        </Grid>
+                    </Border>
+
+                    <TextBlock x:Name="HintText" Text="" FontSize="12" Foreground="#9A9186"
+                               TextWrapping="Wrap" LineHeight="20" />
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <Border Grid.Row="2" Padding="22,9" BorderBrush="#E9E0D2" BorderThickness="0,1,0,0">
+            <TextBlock x:Name="StatusText" Text="就绪" FontSize="12" Foreground="#9A9186" />
+        </Border>
+    </Grid>
+</Window>

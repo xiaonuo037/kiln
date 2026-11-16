@@ -1,0 +1,17 @@
+bin/
+obj/
+artifacts/
+publish/
+
+.vs/
+.idea/
+*.user
+*.suo
+*.userprefs
+
+TestResults/
+*.trx
+coverage*
+
+.DS_Store
+Thumbs.db
