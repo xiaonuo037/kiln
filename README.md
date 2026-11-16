@@ -17,11 +17,9 @@ Minecraft Java 版启动器。还在开发中，第一个能用的版本尚未�
 
 <p>
   <a href="https://github.com/xiaonuo037"><img src="https://github.com/xiaonuo037.png?size=120" width="56" height="56" alt="念安"></a>
-  &nbsp;&nbsp;&nbsp;
-  <img src="assets/avatar-deepseek.svg" width="56" height="56" alt="DeepSeek">
 </p>
 
-**念安**　主开发　　　**DeepSeek**　协作开发
+**念安**　主开发
 
 ## 许可证
 
